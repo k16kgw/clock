@@ -133,3 +133,11 @@ for (const ev of ["mousemove", "mousedown", "touchstart", "keydown", "focusin"])
 
 showView(location.hash === "#timer" ? "timer" : "clock", { updateUrl: false });
 wake();
+
+// ---------- Offline support ----------
+// Cache the site so it opens and reloads without a network (see sw.js).
+// Skipped on localhost so local edits are never hidden behind the cache.
+const isLocal = ["localhost", "127.0.0.1", "[::1]"].includes(location.hostname);
+if ("serviceWorker" in navigator && !isLocal) {
+  navigator.serviceWorker.register("sw.js").catch(() => { /* still works online */ });
+}

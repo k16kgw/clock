@@ -61,6 +61,12 @@ Run a talk's timing from a laptop at the side of the room: bells (1鈴/2鈴/3鈴
 - Screen kept awake while running (Wake Lock API, where supported).
 - While running, the top bar, buttons and cursor fade after 3 s without mouse movement (still clickable).
 
+## 3. Offline (approved 2026-11-09)
+
+- After the first visit, the page works with no network: it opens, reloads, and runs the clock, timer and bells offline.
+- A service worker (`sw.js`, scope `/clock/`) pre-caches all files as one versioned set and serves them cache-first, so files from two deployments are never mixed.
+- Updating: bump `VERSION` in `sw.js` on every change. The new version is picked up in the background and shown from the next load; the page never reloads by itself (a talk may be running).
+
 ## Tech
 
 - Static `index.html`, `css/style.css`, `js/*.js` (ES modules). No libraries, no build step.
@@ -69,4 +75,4 @@ Run a talk's timing from a laptop at the side of the room: bells (1鈴/2鈴/3鈴
 
 ## Non-goals
 
-Server-time correction (the device clock is trusted), multiple timezones, analog face, speaker lists / multi-talk sessions, syncing between devices, custom sound files.
+Installable app (PWA manifest), server-time correction (the device clock is trusted), multiple timezones, analog face, speaker lists / multi-talk sessions, syncing between devices, custom sound files.
